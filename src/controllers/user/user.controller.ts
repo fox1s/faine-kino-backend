@@ -1,26 +1,28 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
 // import {ActionEnum, LogEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constatns';
 // import {hashPassword, tokinizer} from '../../helpers';
 
 // import { emailService, logService, userService } from "../../services";
-import { userService } from "../../services";
+import { userService } from '../../services';
 
 // import { IRequestExtended, IUser } from "../../models";
-import { IUser } from "../../models";
+import { IUser } from '../../models';
 // import { customErrors, ErrorHandler } from "../../errors";
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
+    console.log('createUser');
     const user = req.body as IUser;
     //   user.password = await hashPassword(user.password);
     const { _id } = await userService.createUser(user);
+    console.log(_id);
     //   const {access_token} = tokinizer(ActionEnum.USER_REGISTER);
     //   await userService.addActionToken(_id, {action: ActionEnum.USER_REGISTER, token: access_token});
     //   await emailService.sendEmail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
     //   await logService.createLog({event: LogEnum.USER_REGISTERED, userId: _id});
     //   res.sendStatus(ResponseStatusCodesEnum.CREATED);
-    res.sendStatus(200);
+    res.sendStatus(201);
   }
   //   async confirmUser(req: IRequestExtended, res: Response, next: NextFunction) {
   //     const {_id, status, tokens = []} = req.user as IUser;

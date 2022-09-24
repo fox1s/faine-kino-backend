@@ -7,7 +7,7 @@ import { config } from './config';
 const server = http.createServer(app);
 
 server.listen(config.PORT, () => {
-  console.log(`Listen ${config.PORT}`);
+  console.log(`Faine-kino server listen localhost:${config.PORT}`);
 });
 
 // cronJobRun();

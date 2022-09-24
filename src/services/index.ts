@@ -5,4 +5,4 @@
 // export * from './product';
 // export * from './mail';
 // export * from './store';
-export * from "./user";
+export * from './user';

@@ -8,11 +8,19 @@ import { NextFunction, Request, Response } from "express";
 import * as morgan from "morgan";
 import * as mongoose from "mongoose";
 import * as path from "path";
-import * as fs from "fs";
+
 // import * as swaggerUI from 'swagger-ui-express';
 
 import { config } from "./config";
-// import {adminRouter, authRouter, cartRouter, categoryRouter, productRouter, userRouter} from './routes';
+import {
+  // adminRouter,
+  // authRouter,
+  // cartRouter,
+  // categoryRouter,
+  // productRouter,
+  userRouter,
+  videoStreamRouter,
+} from "./routes";
 import { ResponseStatusCodesEnum } from "./constants";
 // import * as swaggerDoc from './docs/swagger.json';
 
@@ -58,7 +66,12 @@ class App {
     mongoose.connect(config.MONGODB_URL);
 
     const db = mongoose.connection;
-    db.on("error", console.log.bind(console, "MONGO ERRROR"));
+    db.on("error", (e) => console.log("MongoDB error: ", e));
+    db.on("connected", () => console.log("MongoDB connected!"));
+    db.on("disconnected", () => {
+      console.log("MongoDB disconnected!");
+      this.setupDB();
+    });
   }
 
   private customErrorHandler(
@@ -89,44 +102,13 @@ class App {
   };
 
   private mountRoutes(): void {
-    this.app.get("/test-video", (req, res) => {
-      const range = req.headers.range;
-      if (!range) {
-        res.status(400).send("Requires Range header");
-      }
-      const videoPath = "test-video-2.mp4";
-      const videoSize = fs.statSync(videoPath).size;
-      const CHUNK_SIZE = 10 ** 6; // 1MB
-      const start = Number(range?.replace(/\D/g, ""));
-      const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
-
-      const contentLength = end - start + 1;
-      const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": contentLength,
-        "Content-Type": "video/mp4",
-        // "Access-Control-Allow-Origin": "*",
-        "Cross-Origin-Resource-Policy": "same-site",
-      };
-
-      // HTTP Status 206 for Partial Content
-      res.writeHead(206, headers);
-
-      // create video read stream for this particular chunk
-      const videoStream = fs.createReadStream(videoPath, { start, end });
-
-      console.log("chunk");
-
-      // Stream the video chunk to the client
-      videoStream.pipe(res);
-    });
+    this.app.use("/video-stream", videoStreamRouter);
     //   this.app.use("/admin", adminRouter);
     //   this.app.use("/auth", authRouter);
     //   this.app.use("/cart", cartRouter);
     //   this.app.use("/categories", categoryRouter);
     //   this.app.use("/products", productRouter);
-    //   this.app.use("/users", userRouter);
+    this.app.use("/users", userRouter);
 
     //   this.app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
   }
