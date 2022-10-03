@@ -1,1 +1,1 @@
-export * from "./video-stream.router";
+export * from './video-stream.router';

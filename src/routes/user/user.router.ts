@@ -1,25 +1,29 @@
 import { Router } from 'express';
 
 import { userController } from '../../controllers';
-// import {
-//   checkConfirmTokenMiddleware,
-//   checkForgotPassTokenMiddleware,
-//   checkIsEmailExistsMiddleware,
-//   checkIsUserExistByEmailMiddleware,
-//   checkIsUserValidMiddleware,
-//   emailValidatorMiddleware,
-//   singlePasswordValidatorMiddleware
-// } from '../../middleware';
+import {
+  checkConfirmTokenMiddleware,
+  //   checkForgotPassTokenMiddleware,
+  checkIsEmailExistsMiddleware,
+  //   checkIsUserExistByEmailMiddleware,
+  checkIsUserValidMiddleware
+  //   emailValidatorMiddleware,
+  //   singlePasswordValidatorMiddleware
+} from '../../middleware';
 
 const router = Router();
 
 router.post(
   '/',
-  // checkIsUserValidMiddleware,
-  // checkIsEmailExistsMiddleware,
+  checkIsUserValidMiddleware,
+  checkIsEmailExistsMiddleware,
   userController.createUser
 );
-// router.post('/confirm', checkConfirmTokenMiddleware, userController.confirmUser);
+router.post(
+  '/confirm',
+  checkConfirmTokenMiddleware,
+  userController.confirmUser
+);
 // router.post(
 //   '/password/forgot',
 //   emailValidatorMiddleware,

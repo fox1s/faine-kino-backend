@@ -1,51 +1,98 @@
 import { NextFunction, Request, Response } from 'express';
 
-// import {ActionEnum, LogEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constatns';
-// import {hashPassword, tokinizer} from '../../helpers';
+import {
+  ActionEnum,
+  LogEnum,
+  RequestHeadersEnum,
+  ResponseStatusCodesEnum,
+  UserStatusEnum
+} from '../../constants';
+import { hashPassword, tokenizer } from '../../helpers';
 
-// import { emailService, logService, userService } from "../../services";
-import { userService } from '../../services';
+import { emailService, logService, userService } from '../../services';
 
-// import { IRequestExtended, IUser } from "../../models";
+import {
+  IRequestExtended
+  //   IUser
+} from '../../models';
 import { IUser } from '../../models';
-// import { customErrors, ErrorHandler } from "../../errors";
+import { customErrors, ErrorHandler } from '../../errors';
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
     console.log('createUser');
-    const user = req.body as IUser;
-    //   user.password = await hashPassword(user.password);
+    const user: IUser = req.body;
+    user.password = await hashPassword(user.password);
     const { _id } = await userService.createUser(user);
-    console.log(_id);
-    //   const {access_token} = tokinizer(ActionEnum.USER_REGISTER);
-    //   await userService.addActionToken(_id, {action: ActionEnum.USER_REGISTER, token: access_token});
-    //   await emailService.sendEmail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
-    //   await logService.createLog({event: LogEnum.USER_REGISTERED, userId: _id});
-    //   res.sendStatus(ResponseStatusCodesEnum.CREATED);
-    res.sendStatus(201);
+    const { access_token } = tokenizer(ActionEnum.USER_REGISTER);
+
+    await userService.addActionToken(_id, {
+      action: ActionEnum.USER_REGISTER,
+      token: access_token
+    });
+
+    try {
+      await emailService.sendEmail(user.email, ActionEnum.USER_REGISTER, {
+        token: access_token
+      });
+    } catch (e) {
+      console.log('emailService error: ', e);
+    }
+
+    await logService.createLog({ event: LogEnum.USER_REGISTERED, userId: _id });
+    res.sendStatus(ResponseStatusCodesEnum.CREATED);
   }
-  //   async confirmUser(req: IRequestExtended, res: Response, next: NextFunction) {
-  //     const {_id, status, tokens = []} = req.user as IUser;
-  //     const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
-  //     if (status !== UserStatusEnum.PENDING) {
-  //       return next(
-  //         new ErrorHandler(
-  //           ResponseStatusCodesEnum.BAD_REQUEST,
-  //           customErrors.BAD_REQUEST_USER_ACTIVATED.message,
-  //           customErrors.BAD_REQUEST_USER_ACTIVATED.code)
-  //       );
-  //     }
-  //     await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
-  //     const index = tokens.findIndex(({action, token}) => {
-  //       return token === tokenToDelete && action === ActionEnum.USER_REGISTER;
-  //     });
-  //     if (index !== -1) {
-  //       tokens.splice(index, 1);
-  //       await userService.updateUserByParams({_id}, {tokens} as Partial<IUser>);
-  //     }
-  //     await logService.createLog({event: LogEnum.USER_CONFIRMED, userId: _id});
-  //     res.end();
-  //   }
+
+  async confirmUser(req: IRequestExtended, res: Response, next: NextFunction) {
+    const { _id, status } = req.user as IUser;
+    const token = req.get(RequestHeadersEnum.AUTHORIZATION) as string;
+
+    if (status !== UserStatusEnum.PENDING) {
+      return next(
+        new ErrorHandler(
+          ResponseStatusCodesEnum.BAD_REQUEST,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.message,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.code
+        )
+      );
+    }
+
+    const { modifiedCount: isUserTokenDeleted } =
+      await userService.removeActionTokenByUserId(
+        _id,
+        ActionEnum.USER_REGISTER,
+        token
+      );
+    if (!isUserTokenDeleted) {
+      return next(
+        new ErrorHandler(
+          ResponseStatusCodesEnum.FORBIDDEN,
+          customErrors.FORBIDDEN_USER_NOT_CONFIRMED.message,
+          customErrors.FORBIDDEN_USER_NOT_CONFIRMED.code
+        )
+      );
+    }
+
+    const { modifiedCount: isUserConfirmed } =
+      await userService.updateUserByParams(
+        { _id },
+        { status: UserStatusEnum.CONFIRMED }
+      );
+    if (!isUserConfirmed) {
+      return next(
+        new ErrorHandler(
+          ResponseStatusCodesEnum.FORBIDDEN,
+          customErrors.FORBIDDEN_USER_NOT_CONFIRMED.message,
+          customErrors.FORBIDDEN_USER_NOT_CONFIRMED.code
+        )
+      );
+    }
+    await logService.createLog({ event: LogEnum.USER_CONFIRMED, userId: _id });
+    res
+      // .sendStatus(ResponseStatusCodesEnum.CREATED)
+      // .json({ message: "Confirmed" })
+      .end();
+  }
   //   async forgotPassword(req: IRequestExtended, res: Response, next: NextFunction) {
   //     const {_id, email} = req.user as IUser;
   //     const {access_token} = tokinizer(ActionEnum.FORGOT_PASSWORD);

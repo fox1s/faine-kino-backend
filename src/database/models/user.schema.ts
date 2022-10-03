@@ -1,65 +1,64 @@
-import { Document, Model, model, Schema } from 'mongoose';
+import { Document, Model, model, Schema } from "mongoose";
 
-import { IUser } from '../../models';
-import { TableNamesEnum, UserRoleEnum, UserStatusEnum } from '../../constants';
+import { IUser } from "../../models";
+import { TableNamesEnum, UserRoleEnum, UserStatusEnum } from "../../constants";
 
 export type UserType = IUser & Document;
 
 const tokenSubModel = {
   token: String,
-  action: String
+  action: String,
 };
 
 export const UserSchema: Schema = new Schema<IUser>(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     surname: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     role: {
       type: String,
       required: true,
-      default: UserRoleEnum.USER
+      default: UserRoleEnum.USER,
     },
     age: {
       type: Number,
-      required: true
+      required: true,
     },
     phone: {
       type: String,
-      required: false
+      required: false,
     },
     gender: {
       type: String,
-      required: false
+      required: false,
     },
     photo: {
       type: String,
-      required: false
+      required: false,
     },
     status: {
       type: String,
       required: true,
-      default: UserStatusEnum.PENDING
+      default: UserStatusEnum.PENDING,
     },
-    // createdAt: { type: Date, default: Date.now() },
-    tokens: [tokenSubModel]
+    tokens: [tokenSubModel],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

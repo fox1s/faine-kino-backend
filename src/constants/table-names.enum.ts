@@ -4,7 +4,7 @@ export enum TableNamesEnum {
   MOVIE = 'movies',
   // CART = 'carts',
   // CATEGORY = 'categories',
-  // LOGS = 'logs',
+  LOGS = 'logs',
   // PRODUCTS = 'products',
   // STORE = 'store',
 }
