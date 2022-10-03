@@ -34,8 +34,9 @@ export const config = {
 
   MONGODB_URL: process.env.MONGODB_URL || 'mongodb://localhost/faine-kino',
 
-  ROOT_EMAIL: process.env.ROOT_EMAIL || 'mail',
-  ROOT_EMAIL_PASSWORD: process.env.ROOT_EMAIL_PASSWORD || 'password',
+  ROOT_EMAIL: process.env.ROOT_EMAIL || 'faine.kino.service@gmail.com',
+  ROOT_EMAIL_PASSWORD:
+    process.env.ROOT_EMAIL_PASSWORD || '%W8tkksfb9*Ks3kN0y^Ve2Ei6Tbc',
   ROOT_EMAIL_SERVICE: process.env.ROOT_EMAIL_SERVICE || 'gmail',
 
   SUPPORT_EMAIL: process.env.SUPPORT_EMAIL || 'mail'

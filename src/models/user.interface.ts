@@ -1,8 +1,8 @@
-// import {ActionEnum} from '../constatns';
+import { ActionEnum } from '../constants';
 
 export interface IUserToken {
   token?: string;
-  //   action?: ActionEnum
+  action?: ActionEnum;
 }
 
 export interface IUser {
