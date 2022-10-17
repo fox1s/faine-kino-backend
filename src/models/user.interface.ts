@@ -5,6 +5,11 @@ export interface IUserToken {
   action?: ActionEnum;
 }
 
+export interface IUserMovies {
+  favorites: Array<string>;
+  watch_later: Array<string>;
+}
+
 export interface IUser {
   _id: string;
   name: string;
@@ -17,6 +22,7 @@ export interface IUser {
   gender?: string;
   photo?: string;
   status: string;
+  movies?: [IUserMovies];
   tokens?: [IUserToken];
   createdAt: string;
 }

@@ -3,12 +3,12 @@ import { Router } from 'express';
 import { userController } from '../../controllers';
 import {
   checkConfirmTokenMiddleware,
-  //   checkForgotPassTokenMiddleware,
+  checkForgotPassTokenMiddleware,
   checkIsEmailExistsMiddleware,
-  //   checkIsUserExistByEmailMiddleware,
-  checkIsUserValidMiddleware
-  //   emailValidatorMiddleware,
-  //   singlePasswordValidatorMiddleware
+  checkIsUserExistByEmailMiddleware,
+  checkIsUserValidMiddleware,
+  emailValidatorMiddleware,
+  singlePasswordValidatorMiddleware
 } from '../../middleware';
 
 const router = Router();
@@ -19,22 +19,24 @@ router.post(
   checkIsEmailExistsMiddleware,
   userController.createUser
 );
+router.patch('/:id', userController.updateUser);
+
 router.post(
   '/confirm',
   checkConfirmTokenMiddleware,
   userController.confirmUser
 );
-// router.post(
-//   '/password/forgot',
-//   emailValidatorMiddleware,
-//   checkIsUserExistByEmailMiddleware,
-//   userController.forgotPassword
-// );
-// router.post(
-//   '/password/reset',
-//   singlePasswordValidatorMiddleware,
-//   checkForgotPassTokenMiddleware,
-//   userController.setForgotPass
-// );
+router.post(
+  '/password/forgot',
+  emailValidatorMiddleware,
+  checkIsUserExistByEmailMiddleware,
+  userController.forgotPassword
+);
+router.post(
+  '/password/reset',
+  singlePasswordValidatorMiddleware,
+  checkForgotPassTokenMiddleware,
+  userController.setForgotPass
+);
 
 export const userRouter = router;

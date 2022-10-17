@@ -17,11 +17,12 @@ import {
   // authRouter,
   // cartRouter,
   // categoryRouter,
-  // productRouter,
+  movieRouter,
   userRouter,
   videoStreamRouter
 } from './routes';
 import { ResponseStatusCodesEnum } from './constants';
+import { hash } from './helpers';
 // import * as swaggerDoc from './docs/swagger.json';
 
 dotenv.config();
@@ -63,6 +64,7 @@ class App {
   }
 
   private setupDB(): void {
+    hash();
     mongoose.connect(config.MONGODB_URL);
 
     const db = mongoose.connection;
@@ -107,7 +109,7 @@ class App {
     //   this.app.use("/auth", authRouter);
     //   this.app.use("/cart", cartRouter);
     //   this.app.use("/categories", categoryRouter);
-    //   this.app.use("/products", productRouter);
+    this.app.use('/movies', movieRouter);
     this.app.use('/users', userRouter);
 
     //   this.app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));

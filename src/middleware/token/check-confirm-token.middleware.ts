@@ -8,7 +8,7 @@ import {
 import { customErrors, ErrorHandler } from '../../errors';
 import { userService } from '../../services';
 import { IRequestExtended } from '../../models';
-// import {tokinVerificator} from '../../helpers';
+import { tokenVerificator } from '../../helpers';
 
 export const checkConfirmTokenMiddleware = async (
   req: IRequestExtended,
@@ -27,7 +27,7 @@ export const checkConfirmTokenMiddleware = async (
       );
     }
 
-    // await tokinVerificator(ActionEnum.USER_REGISTER, token);
+    tokenVerificator(ActionEnum.USER_REGISTER, token);
 
     const userByToken = await userService.findUserByActionToken(
       ActionEnum.USER_REGISTER,

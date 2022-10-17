@@ -9,6 +9,16 @@ export const customErrors = {
     code: 4002
   },
 
+  BAD_REQUEST_USER_NOT_ACTIVATED: {
+    message: 'User is not activated',
+    code: 4003
+  },
+
+  BAD_REQUEST_MOVIE_ID_NOT_CORRECT: {
+    message: 'Id of movie is not correct',
+    code: 4004
+  },
+
   BAD_REQUEST_NO_TOKEN: {
     message: 'Token is not present'
   },
@@ -33,9 +43,17 @@ export const customErrors = {
     message: 'User is not confirmed',
     code: 4031
   },
+  FORBIDDEN_USER_PASSWORD_NOT_UPDATED: {
+    message: 'User password is not updated',
+    code: 4032
+  },
 
   // 404
   NOT_FOUND: {
     message: 'Record not found'
+  },
+  MOVIE_NOT_FOUND: {
+    message: 'User is not found',
+    code: 4041
   }
 };

@@ -39,5 +39,7 @@ export const config = {
     process.env.ROOT_EMAIL_PASSWORD || '%W8tkksfb9*Ks3kN0y^Ve2Ei6Tbc',
   ROOT_EMAIL_SERVICE: process.env.ROOT_EMAIL_SERVICE || 'gmail',
 
-  SUPPORT_EMAIL: process.env.SUPPORT_EMAIL || 'mail'
+  SUPPORT_EMAIL: process.env.SUPPORT_EMAIL || 'mail',
+
+  MOVIES_DB_FOLDER_PATH: process.env.MOVIES_DB_FOLDER_PATH
 };
