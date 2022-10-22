@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { IMovie } from './movie.interface';
 
 import { IUser } from './user.interface';
 // import { IProduct } from "./product.interface";
@@ -6,6 +7,6 @@ import { IUser } from './user.interface';
 
 export interface IRequestExtended extends Request {
   user?: IUser;
-  //   product?: IProduct;
+  movie?: IMovie;
   //   store?: IStore;
 }

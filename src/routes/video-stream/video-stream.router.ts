@@ -4,7 +4,7 @@ import { videoStreamController } from '../../controllers';
 const router = Router();
 
 router.get(
-  '/',
+  '/:id',
   // TODO middlewares
   videoStreamController.sendVideo
 );

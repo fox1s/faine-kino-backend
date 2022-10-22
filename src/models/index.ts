@@ -2,7 +2,7 @@
 // export * from './cart.interface';
 // export * from './category.interface';
 export * from './log.interface';
-// export * from './product.interface';
+export * from './movie.interface';
 export * from './request-extended.interface';
 // export * from './store.interface';
 export * from './user.interface';

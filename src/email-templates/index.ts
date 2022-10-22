@@ -8,7 +8,7 @@ export const htmlTemplates: {
     templateFileName: 'user-welcome'
   },
   [ActionEnum.FORGOT_PASSWORD]: {
-    subject: 'Співчуваємо',
+    subject: '[Faine-kino] Forgot password',
     templateFileName: 'forgot-password'
   }
 };
