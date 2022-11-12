@@ -5,3 +5,7 @@ export * from './tokenizer.helper';
 export * from './token-verificator.helper';
 export * from './query-builders';
 export * from './custom-hash';
+export * from './upload-image';
+export * from './upload-movie';
+export * from './upload-poster';
+export * from './mappers';

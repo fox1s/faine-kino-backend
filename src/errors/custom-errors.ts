@@ -53,7 +53,16 @@ export const customErrors = {
     message: 'Record not found'
   },
   MOVIE_NOT_FOUND: {
-    message: 'User is not found',
+    message: 'Movie is not found',
     code: 4041
+  },
+
+  // 500
+  INTERNAL_SERVER_ERROR: {
+    message: 'Internal server error'
+  },
+  INTERNAL_SERVER_ERROR_DATA_NOT_UPDATED: {
+    message: 'Data is not updated',
+    code: 5001
   }
 };

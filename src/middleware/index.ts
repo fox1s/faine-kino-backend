@@ -5,3 +5,5 @@
 export * from './token';
 export * from './user';
 export * from './validators';
+export * from './movie';
+export * from './image';

@@ -32,6 +32,10 @@ export const movieQueryBuilder = (
       case 'name':
         filterObject.name = { $regex: query.name as string, $options: 'i' };
         break;
+      case 'genres':
+        const genres2: any = query.genres;
+        filterObject.genres= { $in: genres2.split(',') as Array<string>};
+        break;
       default:
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

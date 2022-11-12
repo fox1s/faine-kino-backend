@@ -9,7 +9,8 @@ export const MovieSchema: Schema = new Schema<IMovie>(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     description: {
       type: String,
@@ -27,9 +28,13 @@ export const MovieSchema: Schema = new Schema<IMovie>(
       type: Number,
       required: true
     },
+    genres: {
+      type: [String],
+      required: true
+    },
     path: {
       type: String,
-      required: true
+      required: false
     }
     // actors: [actorsSubModel]
   },
