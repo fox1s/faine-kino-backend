@@ -17,6 +17,7 @@ import {
   // authRouter,
   // cartRouter,
   // categoryRouter,
+  imageRouter,
   movieRouter,
   userRouter,
   videoStreamRouter
@@ -55,6 +56,9 @@ class App {
     this.app.use(
       express.static(path.resolve((global as any).appRoot, 'public'))
     );
+    this.app.use(
+      express.static(path.resolve((global as any).appRoot, 'imageDB'))
+    );
     // this.app.use(express.static(path.join(process.cwd(), "../", "public")));
 
     this.mountRoutes();
@@ -66,7 +70,7 @@ class App {
   private setupDB(): void {
     hash();
     mongoose.connect(config.MONGODB_URL);
-
+    console.log(path.resolve((global as any).appRoot));
     const db = mongoose.connection;
     db.on('error', (e) => console.log('MongoDB error: ', e));
     db.on('connected', () => console.log('MongoDB connected!'));
@@ -82,10 +86,12 @@ class App {
     res: Response,
     next: NextFunction
   ): void {
-    res.status(err.status || ResponseStatusCodesEnum.SERVER).json({
-      message: err.message || 'Unknown Error',
-      code: err.code
-    });
+    res
+      .status(err.status || ResponseStatusCodesEnum.INTERNAL_SERVER_ERROR)
+      .json({
+        message: err.message || 'Unknown Error',
+        code: err.code
+      });
   }
 
   private configureCors = (origin: any, callback: any) => {
@@ -111,6 +117,7 @@ class App {
     //   this.app.use("/categories", categoryRouter);
     this.app.use('/movies', movieRouter);
     this.app.use('/users', userRouter);
+    this.app.use('/images', imageRouter);
 
     //   this.app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
   }

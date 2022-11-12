@@ -29,7 +29,7 @@ export const tokenVerificator = (action: ActionEnum, token: string) => {
 
       default:
         throw new ErrorHandler(
-          ResponseStatusCodesEnum.SERVER,
+          ResponseStatusCodesEnum.INTERNAL_SERVER_ERROR,
           'wrong Action type'
         );
     }

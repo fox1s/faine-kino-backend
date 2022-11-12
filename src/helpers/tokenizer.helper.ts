@@ -34,7 +34,7 @@ export const tokenizer = (
 
     default:
       throw new ErrorHandler(
-        ResponseStatusCodesEnum.SERVER,
+        ResponseStatusCodesEnum.INTERNAL_SERVER_ERROR,
         'Wrong action type'
       );
   }

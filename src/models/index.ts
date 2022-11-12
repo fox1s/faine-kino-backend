@@ -6,3 +6,4 @@ export * from './movie.interface';
 export * from './request-extended.interface';
 // export * from './store.interface';
 export * from './user.interface';
+export * from './image.interface';

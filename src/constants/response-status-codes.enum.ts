@@ -7,5 +7,5 @@ export enum ResponseStatusCodesEnum {
   FORBIDDEN = 403,
   NOT_FOUND = 404,
 
-  SERVER = 500,
+  INTERNAL_SERVER_ERROR = 500,
 }

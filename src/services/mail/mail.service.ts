@@ -45,7 +45,7 @@ export class MailService {
 
     if (!templateInfo) {
       throw new ErrorHandler(
-        ResponseStatusCodesEnum.SERVER,
+        ResponseStatusCodesEnum.INTERNAL_SERVER_ERROR,
         'Template not found'
       );
     }

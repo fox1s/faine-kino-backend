@@ -4,3 +4,4 @@
 export * from './movie';
 export * from './user';
 export * from './video-stream';
+export * from './image';
