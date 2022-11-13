@@ -10,5 +10,10 @@ export const htmlTemplates: {
   [ActionEnum.FORGOT_PASSWORD]: {
     subject: '[Faine-kino] Forgot password',
     templateFileName: 'forgot-password'
+  },
+  [ActionEnum.USER_CODE_AUTH]: {
+    subject: '[Faine-kino] Attempt to loggin in Faine-kino',
+    templateFileName: 'code-for-login'
   }
+
 };

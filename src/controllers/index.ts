@@ -1,4 +1,4 @@
-// export * from './auth';
+export * from './auth';
 // export * from './cart';
 // export * from './category';
 export * from './movie';

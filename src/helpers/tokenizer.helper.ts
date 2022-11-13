@@ -20,6 +20,12 @@ export const tokenizer = (
       });
       break;
 
+    case ActionEnum.USER_CODE_AUTH:
+      access_token = jwt.sign({}, config.JWT_LOGIN_CODE_SECRET, {
+        expiresIn: config.JWT_LOGIN_CODE_LIFETIME
+      });
+      break;
+
     case ActionEnum.USER_REGISTER:
       access_token = jwt.sign({}, config.JWT_CONFIRM_EMAIL_SECRET, {
         expiresIn: config.JWT_CONFIRM_EMAIL_LIFETIME

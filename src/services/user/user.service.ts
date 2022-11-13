@@ -12,7 +12,10 @@ class UserService {
   }
 
   // //   Replace update() with updateOne(), updateMany(), or replaceOne()
-  addActionToken(userId: string, tokenObject: IUserToken) {
+  addActionToken(
+    userId: string,
+    tokenObject: IUserToken & { authCode?: number }
+  ) {
     return UserModel.updateOne(
       { _id: new Types.ObjectId(userId) },
       {
@@ -37,6 +40,20 @@ class UserService {
   ): Promise<IUser | null> {
     return UserModel.findOne({
       $and: [{ 'tokens.action': action }, { 'tokens.token': token }]
+    }) as any;
+  }
+
+  findUserByActionTokenAndAuthCode(
+    action: ActionEnum,
+    token: string,
+    authCode: number
+  ): Promise<IUser | null> {
+    return UserModel.findOne({
+      $and: [
+        { 'tokens.action': action },
+        { 'tokens.token': token },
+        { 'tokens.authCode': authCode }
+      ]
     }) as any;
   }
 

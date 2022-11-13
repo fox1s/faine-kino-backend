@@ -6,3 +6,4 @@ export * from './movie.schema';
 // export * from './store.schema';
 export * from './user.schema';
 export * from './image.schema';
+export * from './access-token.schema';

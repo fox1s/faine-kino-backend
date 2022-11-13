@@ -1,4 +1,4 @@
-// export * from "./auth";
+export * from './auth';
 // export * from "./file";
 // export * from "./product";
 // export * from "./store";
