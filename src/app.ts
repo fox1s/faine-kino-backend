@@ -14,7 +14,7 @@ import * as path from 'path';
 import { config } from './config';
 import {
   // adminRouter,
-  // authRouter,
+  authRouter,
   // cartRouter,
   // categoryRouter,
   imageRouter,
@@ -112,7 +112,7 @@ class App {
   private mountRoutes(): void {
     this.app.use('/video-stream', videoStreamRouter);
     //   this.app.use("/admin", adminRouter);
-    //   this.app.use("/auth", authRouter);
+    this.app.use('/auth', authRouter);
     //   this.app.use("/cart", cartRouter);
     //   this.app.use("/categories", categoryRouter);
     this.app.use('/movies', movieRouter);

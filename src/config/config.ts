@@ -23,6 +23,10 @@ export const config = {
     process.env.JWT_CONFIRM_EMAIL_SECRET || 'd%^&fsdnFFkmsdkfHJFAJa',
   JWT_CONFIRM_EMAIL_LIFETIME: process.env.JWT_CONFIRM_EMAIL_LIFETIME || '24h',
 
+  JWT_LOGIN_CODE_SECRET:
+  process.env.JWT_LOGIN_CODE_SECRET || 'd%^&fsdnFFkmsdkfHJFAJa',
+  JWT_LOGIN_CODE_LIFETIME: process.env.JWT_LOGIN_CODE_LIFETIME || '10m',
+
   JWT_PASS_RESET_SECRET:
     process.env.JWT_PASS_RESET_SECRET || '4234&&34refFSDJNK7sdf$%^',
   JWT_PASS_RESET_LIFETIME: process.env.JWT_PASS_RESET_LIFETIME || '24h',

@@ -8,5 +8,6 @@ import { IUser } from './user.interface';
 export interface IRequestExtended extends Request {
   user?: IUser;
   movie?: IMovieRequestExtended;
+  authCode?: number;
   //   store?: IStore;
 }

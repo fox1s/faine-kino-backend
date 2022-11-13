@@ -7,7 +7,11 @@ export type UserType = IUser & Document;
 
 const tokenSubModel = {
   token: String,
-  action: String
+  action: String,
+  authCode: {
+    type: Number,
+    required: false
+  }
 };
 
 const moviesSubModel = {

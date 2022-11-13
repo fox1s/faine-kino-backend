@@ -1,8 +1,8 @@
-import { verify, VerifyErrors } from 'jsonwebtoken';
+import { verify, VerifyErrors } from "jsonwebtoken";
 
-import { ActionEnum, ResponseStatusCodesEnum } from '../constants';
-import { config } from '../config';
-import { customErrors, ErrorHandler } from '../errors';
+import { ActionEnum, ResponseStatusCodesEnum } from "../constants";
+import { config } from "../config";
+import { customErrors, ErrorHandler } from "../errors";
 
 export const tokenVerificator = (action: ActionEnum, token: string) => {
   try {
@@ -11,6 +11,20 @@ export const tokenVerificator = (action: ActionEnum, token: string) => {
     switch (action) {
       case ActionEnum.USER_AUTH:
         isValid = verify(token, config.JWT_SECRET) as VerifyErrors | null;
+        break;
+
+      case ActionEnum.USER_CODE_AUTH:
+        isValid = verify(
+          token,
+          config.JWT_LOGIN_CODE_SECRET
+        ) as VerifyErrors | null;
+        break;
+
+      case ActionEnum.REFRESH_TOKEN:
+        isValid = verify(
+          token,
+          config.JWT_REFRESH_SECRET
+        ) as VerifyErrors | null;
         break;
 
       case ActionEnum.USER_REGISTER:
@@ -30,12 +44,13 @@ export const tokenVerificator = (action: ActionEnum, token: string) => {
       default:
         throw new ErrorHandler(
           ResponseStatusCodesEnum.INTERNAL_SERVER_ERROR,
-          'wrong Action type'
+          "wrong Action type"
         );
     }
 
     return isValid;
   } catch (e) {
+    console.log(e);
     throw new ErrorHandler(
       ResponseStatusCodesEnum.UNAUTHORIZED,
       customErrors.UNAUTHORIZED_BAD_TOKEN.message

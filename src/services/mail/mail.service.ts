@@ -49,6 +49,7 @@ export class MailService {
         'Template not found'
       );
     }
+    console.log(context);
 
     Object.assign(context, contextExtension);
 

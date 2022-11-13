@@ -12,7 +12,6 @@ export const checkIsUserExistByEmailMiddleware = async (
 ): Promise<void | NextFunction> => {
   const { email } = req.body;
   const userByEmail = await userService.findOneByParams({ email });
-  console.log(userByEmail);
 
   if (!userByEmail) {
     return next(
